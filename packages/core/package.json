@@ -19,7 +19,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "test": "node ./__tests__/core.test.js"
+    "test": "npx lerna run build --scope=@brincat/core && jest"
   },
   "bugs": {
     "url": "https://github.com/jonathanbrincat/monorepo.tsc/issues"
