@@ -1,7 +1,7 @@
 {
-  "name": "@brincat/core",
+  "name": "@brincat/vue",
   "version": "0.0.0",
-  "description": "Core package",
+  "description": "Vue.js package",
   "author": "Jonathan Brincat <jb@pix8.co.uk>",
   "homepage": "https://github.com/jonathanbrincat/monorepo.tsc#readme",
   "repository": {
@@ -13,9 +13,7 @@
   },
   "license": "UNLICENSED",
   "type": "module",
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/vue.js",
   "directories": {
     "lib": "lib",
     "test": "__tests__"
@@ -24,14 +22,11 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc -b tsconfig.cjs.json tsconfig.esm.json tsconfig.types.json",
-    "build:cjs": "tsc -p tsconfig.cjs.json",
-    "build:esm": "tsc -p tsconfig.esm.json",
-    "build:types": "tsc -p tsconfig.types.json",
-    "test": "npx lerna run build --scope=@brincat/core && jest"
+    "build": "tsc",
+    "test": "node ./__tests__/vue.test.js"
   },
   "dependencies": {
-    "@brincat/utils": "*"
+    "@brincat/vue": "*"
   },
   "devDependencies": {
     "jest": "^29.7.0",
