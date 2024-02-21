@@ -4,25 +4,31 @@
   "description": "Core package",
   "author": "Jonathan Brincat <jb@pix8.co.uk>",
   "homepage": "https://github.com/jonathanbrincat/monorepo.tsc#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonathanbrincat/monorepo.tsc.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jonathanbrincat/monorepo.tsc/issues"
+  },
   "license": "UNLICENSED",
-  "main": "lib/core.js",
+  "type": "module",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/index.d.ts",
   "directories": {
     "lib": "lib",
     "test": "__tests__"
   },
   "files": [
-    "lib"
+    "dist"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jonathanbrincat/monorepo.tsc.git"
-  },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc -b tsconfig.cjs.json tsconfig.esm.json tsconfig.types.json",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "build:types": "tsc -p tsconfig.types.json",
     "test": "npx lerna run build --scope=@brincat/core && jest"
-  },
-  "bugs": {
-    "url": "https://github.com/jonathanbrincat/monorepo.tsc/issues"
   },
   "devDependencies": {
     "jest": "^29.7.0",
