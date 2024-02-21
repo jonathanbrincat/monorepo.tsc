@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import HelloWorld from './components/HelloWorld.vue'
+
+const count = ref(0)
 </script>
 
 <template>
@@ -11,7 +14,13 @@ import HelloWorld from './components/HelloWorld.vue'
     </div>
   </header>
 
-  <main></main>
+  <main>
+    <p>
+      <button @click="count++">
+        Count is {{ count }}
+      </button>
+    </p>
+  </main>
 </template>
 
 <style scoped>
@@ -40,5 +49,17 @@ header {
     place-items: flex-start;
     flex-wrap: wrap;
   }
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  margin-top: 2em;
+}
+
+button {
+  border: 2px solid white;
+  border-radius: 6px;
+  padding: 0.5em 1em;
 }
 </style>
