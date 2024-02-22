@@ -2,14 +2,11 @@
   font-size: inherit;
   line-height: 1;
   display: flex;
-  /* gap: 20px; */
   gap: 10px;
 }
 
 .ui__digit:nth-last-child(even):not(:first-child) {
-/* & > div:nth-last-child(even):not(:first-child) { */
   display: inline-flex;
-  /* gap: 20px; */
   gap: 10px;
   align-items: center;
 }

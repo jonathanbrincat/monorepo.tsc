@@ -71,7 +71,6 @@
   grid-row: 2 / 3;
   align-items: flex-end;
   transform-origin: top;
-  /* transform-style: preserve-3d; */ /* JB: causes spooky things to happen */
   z-index: 1;
 }
 
