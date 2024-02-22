@@ -6,7 +6,7 @@ import CountdownTimer, { foobar } from '@brincat/core'
 
 const count = ref(0)
 const state = reactive({
-  countdownTimer: new CountdownTimer(60000),
+  countdownTimer: new CountdownTimer(36000000),
 })
 
 onMounted(() => state.countdownTimer.start())
@@ -23,11 +23,18 @@ onUnmounted(() => state.countdownTimer.stop())
   </header>
 
   <main>
-    <h1 class="my-4">{{ state.countdownTimer.tick }}</h1>
-    
-    <!-- JB: this will eventually come from @brincat/vue -->
-    <Countdown class="my-4" style="font-size: 142px;" :duration="state.countdownTimer.tick" />
-    
+    <h1>Packages</h1>
+    <dl class="my-4">
+      <dt>@brincat/core (Headless UI)</dt>
+      <dd>{{ state.countdownTimer.tick }}</dd>
+
+      <dt>@brincat/vue (Vue Component)</dt>
+      <dd style="font-size: 142px;">
+        <!-- JB: this will eventually come from @brincat/vue -->
+        <Countdown class="my-4" :duration="state.countdownTimer.tick" />
+      </dd>
+    </dl>
+        
     <h2 class="my-4">{{ foobar }}</h2>
 
     <p class="my-4">

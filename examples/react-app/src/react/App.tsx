@@ -11,7 +11,7 @@ export default function App() {
   const [tick, setTick] = useState(0)
 
   // JB: can also use MobX to use Observable reactivity like Vue
-  const countdownTimer = new CountdownTimer(60000, (newTick: number) => setTick(newTick))
+  const countdownTimer = new CountdownTimer(36000000, (newTick: number) => setTick(newTick))
 
   useEffect(() => {
     countdownTimer.start()
@@ -30,10 +30,17 @@ export default function App() {
       </header>
       
       <main>
-        <h1 className="my-4">{tick}</h1>
+        <h1>Packages</h1>
+        <dl className="my-4">
+          <dt>@brincat/core (Headless UI)</dt>
+          <dd>{tick}</dd>
 
-        {/* <!-- JB: this will eventually come from @brincat/react --> */}
-        <Countdown tick={tick} />
+          <dt>@brincat/react (React Component)</dt>
+          <dd style={{fontSize: '142px'}}>
+            {/* <!-- JB: this will eventually come from @brincat/react --> */}
+            <Countdown className="my-4" duration={tick} />
+          </dd>
+        </dl>
         
         <p className="my-4">{foobar}</p>
 

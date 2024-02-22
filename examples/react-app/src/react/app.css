@@ -20,10 +20,6 @@ header {
   }
 }
 
-.card {
-  padding: 2em;
-}
-
 @media (min-width: 1024px) {
   header {
     display: flex;
