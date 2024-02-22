@@ -26,6 +26,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@brincat/core": "*",
     "@brincat/vue": "*",
     "vue": "^3.4.15"
   },

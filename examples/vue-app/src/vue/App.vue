@@ -1,8 +1,16 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, reactive, onMounted, onUnmounted } from 'vue'
 import HelloWorld from './components/HelloWorld.vue'
+import Countdown from './components/Countdown.vue'
+import CountdownTimer, { foobar } from '@brincat/core'
 
 const count = ref(0)
+const state = reactive({
+  countdownTimer: new CountdownTimer(60000),
+})
+
+onMounted(() => state.countdownTimer.start())
+onUnmounted(() => state.countdownTimer.stop())
 </script>
 
 <template>
@@ -15,7 +23,13 @@ const count = ref(0)
   </header>
 
   <main>
-    <p>
+    <h1 class="my-4">{{ state.countdownTimer.tick }}</h1>
+    
+    <Countdown class="my-4" :tick="state.countdownTimer.tick" />
+    
+    <h2 class="my-4">{{ foobar }}</h2>
+
+    <p class="my-4">
       <button @click="count++">
         Count is {{ count }}
       </button>
@@ -31,6 +45,18 @@ header {
 .logo {
   display: block;
   margin: 0 auto 2rem;
+  will-change: filter;
+  transition: filter 300ms;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #54fda6a0);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .logo {
+    animation: logo-spin infinite 20s linear;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -53,6 +79,8 @@ header {
 
 main {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
   margin-top: 2em;
 }
@@ -61,5 +89,15 @@ button {
   border: 2px solid white;
   border-radius: 6px;
   padding: 0.5em 1em;
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotateY(0deg);
+  }
+
+  to {
+    transform: rotateY(360deg);
+  }
 }
 </style>

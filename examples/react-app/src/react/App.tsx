@@ -1,11 +1,23 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import HelloWorld from './components/HelloWorld.tsx'
+import Countdown from './components/Countdown.tsx'
+import CountdownTimer, { foobar } from '@brincat/core'
 import reactLogo from '../svg/react.svg'
 
 import './app.css'
 
-function App() {
+export default function App() {
   const [count, setCount] = useState(0)
+  const [tick, setTick] = useState(0)
+
+  // JB: can also use MobX to use Observable reactivity like Vue
+  const countdownTimer = new CountdownTimer(60000, (newTick: number) => setTick(newTick))
+
+  useEffect(() => {
+    countdownTimer.start()
+
+    return () => countdownTimer.stop()
+  }, [])
 
   return (
     <>
@@ -18,12 +30,18 @@ function App() {
       </header>
       
       <main>
-        <button onClick={() => setCount((count) => count + 1)}>
-          Count is {count}
-        </button>
+        <h1 className="my-4">{tick}</h1>
+
+        <Countdown tick={tick} />
+        
+        <p className="my-4">{foobar}</p>
+
+        <p className="my-4">
+          <button onClick={() => setCount((count) => count + 1)}>
+            Count is {count}
+          </button>
+        </p>
       </main>
     </>
   )
 }
-
-export default App

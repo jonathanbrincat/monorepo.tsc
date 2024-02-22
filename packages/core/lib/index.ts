@@ -1,1 +1,4 @@
-export { default as core } from './core'
+export { default as default } from './core'
+
+export const foobar = "Hello, from named foobar"
+

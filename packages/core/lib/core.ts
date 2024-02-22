@@ -1,5 +1,5 @@
 export default class Core implements ITempo {
-  private interval!: number | null
+  private interval!: number | NodeJS.Timeout| null
   private tick!: number
   private epoch!: number
   private _milliseconds: number
@@ -7,7 +7,9 @@ export default class Core implements ITempo {
   private _minutes: number
   private _hours: number
 
-  constructor(private offset = 0) {
+  private callback?: Function
+
+  constructor(private offset = 0, callback?: Function) {
     this.offset = offset
     this.interval = null
     this.tick = 0
@@ -16,6 +18,8 @@ export default class Core implements ITempo {
     this._seconds = 0
     this._minutes = 0
     this._hours = 0
+
+    this.callback = callback
   }
 
   public get milliseconds(): number {
@@ -72,5 +76,7 @@ export default class Core implements ITempo {
       this.stop()
       this.reset()
     }
+
+    if (this.callback) this.callback(this.tick)
   }
 }
