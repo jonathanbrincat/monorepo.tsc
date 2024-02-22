@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, /*computed,*/ watch } from 'vue'
+import { reactive, watch } from 'vue'
 
 const prop = defineProps<{
   value: number
@@ -8,21 +8,11 @@ const prop = defineProps<{
 const state = reactive({
   toggle: true,
   previousValue: 0,
-  value: 0,
 })
 
 async function onDigitAfterLeave() {
   state.toggle = true // JB: might not be needed
 }
-
-// const count = computed({
-//   get(): number {
-//     return prop.value
-//   },
-//   set(value: number) {
-//     state.value = value
-//   }
-// })
 
 watch(() => prop.value, (newValue, oldValue) => {
   state.previousValue = oldValue
@@ -126,7 +116,6 @@ watch(() => prop.value, (newValue, oldValue) => {
     grid-row: 2 / 3;
     align-items: flex-end;
     transform-origin: top;
-    /* transform-style: preserve-3d; // JB: causes spooky things to happen */
     z-index: 1;
   }
 
