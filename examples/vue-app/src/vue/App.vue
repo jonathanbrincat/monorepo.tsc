@@ -25,7 +25,8 @@ onUnmounted(() => state.countdownTimer.stop())
   <main>
     <h1 class="my-4">{{ state.countdownTimer.tick }}</h1>
     
-    <Countdown class="my-4" :tick="state.countdownTimer.tick" />
+    <!-- JB: this will eventually come from @brincat/vue -->
+    <Countdown class="my-4" style="font-size: 142px;" :duration="state.countdownTimer.tick" />
     
     <h2 class="my-4">{{ foobar }}</h2>
 

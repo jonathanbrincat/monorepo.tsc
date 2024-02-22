@@ -32,6 +32,7 @@ export default function App() {
       <main>
         <h1 className="my-4">{tick}</h1>
 
+        {/* <!-- JB: this will eventually come from @brincat/react --> */}
         <Countdown tick={tick} />
         
         <p className="my-4">{foobar}</p>
