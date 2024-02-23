@@ -27,6 +27,9 @@
   align-items: flex-start;
   padding: 0 0.2em 0 0.2em;
   overflow: hidden;
+
+  position: relative;
+  bottom: 110px;
 }
 
 .digit:after {
@@ -41,6 +44,9 @@
   align-items: flex-end;
   padding: 0 0.2em 0 0.2em;
   overflow: hidden;
+
+  position: relative;
+  top: 110px;
 }
 
 .card {
