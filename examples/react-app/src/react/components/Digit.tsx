@@ -1,14 +1,18 @@
 import React, { useState, useRef, useEffect, useLayoutEffect } from 'react'
-import { useAnimate } from 'framer-motion'
+import { useAnimate, useAnimation } from 'framer-motion'
 
 import './Digit.css'
 
 // BUGS:
 // 1.the animation running on mount is potentially causing issues by trigger false positives; i think to get around this framer has a helper effect that use to check if mounted or somthing also this might help
 //  https://stackoverflow.com/questions/67626851/avoiding-framer-motion-initial-animations-on-mount
-// 2.it looks like the bottom slide doesn't start with an initial rotation of 90. so obscures the number behind it. until it shifts to animate.
+// 2.okay what needs to happen is as soon as the animation starts from the top, the bottom half needs to disappear or reset to 90deg. it currently stays put and awaits its turn in the sequence. the bottom half is good to stay planted until the top animation starts
 // https://stackoverflow.com/questions/76635299/how-to-setup-the-initial-value-with-framer-motion-useanimate-hook
-// 3.okay what needs to happen is as soon as the animation starts from the top, the bottom half needs to disappear or reset to 90deg. it currently stays put and awaits its turn in the sequence. the bottom half is good to stay planted until the top animation starts
+
+// const controls = useAnimation()
+// controls.set({ rotateX: 90 })
+// await controls.start({ rotateX: 90 })
+// https://www.youtube.com/watch?v=yKeqNWm835s&ab_channel=KonstantinLebedev
 
 // TODO:
 // 1. turn framer motion animation into custom hook
@@ -20,7 +24,6 @@ export default function Digit({ value }: { value: number}) {
   const [previousValue, setPreviousValue] = useState(value)
 
   // const foo: React.MutableRefObject<T | null> = useRef(null)
-  // const bar: React.MutableRefObject<T | null> = useRef(null)
 
   const [isMounted, setIsMounted] = useState(false)
   const [scope, animate] = useAnimate()
