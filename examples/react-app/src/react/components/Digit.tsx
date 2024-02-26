@@ -22,42 +22,13 @@ export default function Digit({ value }: { value: number}) {
   const [scope2, animate2] = useAnimate()
   const [isPresent, safeToRemove] = usePresence()
 
-
-  useEffect(() => {
-    /*
-    foo.current?.addEventListener('transitionend', (event: React.SyntheticEvent<T>) => {
-      console.log('transitionend :: top', event.target)
-
-      // event.target
-      foo.current?.classList.remove('card-top-leave-active', 'card-top-leave-to')
-    })
-
-    bar.current?.addEventListener('transitionend', (event: React.SyntheticEvent<T>) => {
-      // console.log('transitionend :: bottom')
-
-      // setToggle(true)
-      
-      // bar.current?.classList.remove('card-bottom-leave-active', 'card-bottom-leave-to')
-    })
-
-    return () => {
-      foo.current?.removeEventListener('transitionend', (event: React.SyntheticEvent<T>) => { })
-      bar.current?.removeEventListener('transitionend', (event: React.SyntheticEvent<T>) => { })
-    }
-    */
-  }, [])
-
   // render synchronously BEFORE react renders and forces a batch reflow/repaint
   useLayoutEffect(() => {
-    // console.log('2. useLayoutEffect ', value, foo)
-
     if (value !== previousValue) {
       // setToggle(false)
     } else {
       // setToggle(true)
     }
-    // foo.current?.classList.add('card-top-leave-from')
-    // bar.current?.classList.add('card-bottom-leave-to', 'card-bottom-leave-from')
 
     bar.current?.classList.remove('card-bottom-leave-to')
     bar.current?.classList.add('card-bottom-leave-from')
@@ -65,11 +36,6 @@ export default function Digit({ value }: { value: number}) {
     // JB: exploits cleanup mechanic and captured closure of differing variable scope
     // return () => setPreviousValue(value)
     return () => {
-      // console.log('useLayoutEffect cleanup')
-
-      // foo.current?.classList.add('card-top-leave-from')
-      // bar.current?.classList.add('card-bottom-leave-from')
-
       setPreviousValue(value)
       // setPreviousValue(() => {
       //   return value
@@ -79,33 +45,9 @@ export default function Digit({ value }: { value: number}) {
 
   // render asynchronously AFTER(concurrently) the render and the relow and/repaint
   useEffect(() => {
-    // console.log('4. useEffect ', value)
-    
-    // Effect callback, executed after render
-    // foo.current?.classList.add('card-top-leave-active')
-    // bar.current?.classList.add('card-bottom-leave-active')
-    // bar.current?.classList.remove('card-bottom-leave-from')
-
-    bar.current?.classList.remove('card-bottom-leave-from')
-    bar.current?.classList.add('card-bottom-leave-to')
-
-    // console.log('tick', value, ' :: ', previousValue)
-
-    // animate('li', { opacity: 1 })
-    // animate(scope.current, { opacity: 1 }, { duration: 1 })
-
     if (value !== previousValue) {
-      console.log('tick tock')
-      // bar.current?.classList.remove('card-bottom-leave-from')
-
       // setToggle(false)
       setToggle(() => {
-        // foo.current?.classList.add('card-top-leave-from')
-        // bar.current?.classList.add('card-bottom-leave-from')
-
-        // foo.current?.classList.replace('card-top-leave-from', 'card-top-leave-to')
-        // bar.current?.classList.replace('card-bottom-leave-from', 'card-bottom-leave-to')
-
         return false
       })
     }
@@ -115,18 +57,10 @@ export default function Digit({ value }: { value: number}) {
     // JB: exploits cleanup mechanic and captured closure of differing variable scope
     // return () => setPreviousValue(value)
     return () => {
-      // console.log('3. useEffect cleanup')
-
-      // foo.current?.classList.add('card-top-leave-from')
-      // bar.current?.classList.add('card-bottom-leave-from')
-
       // setPreviousValue(value)
       // setPreviousValue(() => {
       //   return value
       // })
-
-      // foo.current?.classList.add('card-top-leave-active', 'card-top-leave-from')
-      // bar.current?.classList.add('card-bottom-leave-active', 'card-bottom-leave-from')
     }
   }, [value])
 
@@ -176,20 +110,10 @@ export default function Digit({ value }: { value: number}) {
 
   async function onDigitAfterLeave1(event) {
     // event.stopPropagation()
-
-    // foo.current?.classList.remove('card-top-leave-active', 'card-top-leave-to')
-    // foo.current?.classList.remove('card-top-leave-active')
-    // event.target.classList.remove('card-top-leave-active')
   }
 
   async function onDigitAfterLeave2(event) {
     // event.stopPropagation()
-
-    console.log('onDigitAfterLeave2', event)
-
-    // bar.current?.classList.remove('card-bottom-leave-active', 'card-bottom-leave-to')
-    // event.target.classList.remove('card-bottom-leave-active')
-    // bar.current?.classList.remove('card-bottom-leave-to')
 
     // setToggle(true)
   }
@@ -282,10 +206,10 @@ export default function Digit({ value }: { value: number}) {
           )
         } */}
 
-        {/* <div className="demo" ref={scope} onClick={() => setFlipped(state => !state)}>
+        <div className="demo" ref={scope} onClick={() => setFlipped(state => !state)}>
           <div className="demo__card card-back foo" ref={scope1}>Top 1</div>
           <div className="demo__card card-front bar" ref={scope2}>Bottom 1</div>
-        </div> */}
+        </div>
 
         {/* <div className="demo" onClick={() => setFlipped(state => !state)}>
           <AnimatePresence>
