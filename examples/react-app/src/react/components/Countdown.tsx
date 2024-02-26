@@ -34,13 +34,13 @@ export default function Countdown({ className = '', duration = 5000 }: ICountdow
   return (
     <div className={`ui__countdown ${className}`}>
       <div className="dials">
-        <Digit value={tens(time.hours)} />
-        <Digit value={units(time.hours)} />
+        {/* <Digit value={tens(time.hours)} /> */}
+        {/* <Digit value={units(time.hours)} /> */}
 
-        <Digit value={tens(time.minutes)} />
-        <Digit value={units(time.minutes)} />
+        {/* <Digit value={tens(time.minutes)} /> */}
+        {/* <Digit value={units(time.minutes)} /> */}
 
-        <Digit value={tens(time.seconds)} />
+        {/* <Digit value={tens(time.seconds)} /> */}
         <Digit value={units(time.seconds)} />
       </div>
 

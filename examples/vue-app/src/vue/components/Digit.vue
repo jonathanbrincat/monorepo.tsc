@@ -10,8 +10,8 @@ const state = reactive({
   previousValue: 0,
 })
 
-async function onDigitAfterLeave() {
-  state.toggle = true // JB: might not be needed
+async function onDigitAfterLeave(event) {
+  state.toggle = true
 }
 
 watch(() => prop.value, (newValue, oldValue) => {
@@ -27,7 +27,9 @@ watch(() => prop.value, (newValue, oldValue) => {
       <div class="digit" :data-before="Math.abs(prop.value % 10)" :data-after="Math.abs(state.previousValue % 10)">
         <Transition name="card-top">
           <!-- DEVNOTE: alternative to using v-if with v-show; no pitfalls for doing it this way either -->
-          <div class="card card-top" v-show="state.toggle">{{ state.toggle ? Math.abs(prop.value % 10) : Math.abs(state.previousValue % 10) }}</div>
+          <div class="card card-top" v-show="state.toggle">
+            {{ state.toggle ? Math.abs(prop.value % 10) : Math.abs(state.previousValue % 10) }}
+          </div>
 
           <!-- DEVNOTE: here I exploit v-if and the mechanic of injecting into the dom before the reactivity can effect a repaint to cache the previous value and update with a fresh pain after the transition. This avoids having to otherwise manage and orchestrate with logic and removes other potential overheads such as rolling over zero between base-10 and base-6(which would otherwise need to be handled), and by limiting the control logic and the component functionally pure(you feed a prop in and the same prop output pops out) it can handle incrementing and decrementing values without intervention;
           although a v-if is more expensive than a v-show. I feel the advantages + development experience outweigh the cost + there is a reduced logic footprint so less to execute so you're getting some return -->
@@ -35,7 +37,9 @@ watch(() => prop.value, (newValue, oldValue) => {
         </Transition>
 
         <Transition name="card-bottom" @after-leave="onDigitAfterLeave">
-          <div class="card card-bottom" v-show="state.toggle">{{ Math.abs(prop.value % 10) }}</div> 
+          <div class="card card-bottom" v-show="state.toggle">
+            {{ Math.abs(prop.value % 10) }}
+          </div> 
         </Transition>
       </div>
     </div>
@@ -72,6 +76,9 @@ watch(() => prop.value, (newValue, oldValue) => {
     align-items: flex-start;
     padding: 0 0.2em 0 0.2em;
     overflow: hidden;
+
+    position: relative;
+    bottom: 50px;
   }
 
   .digit:after {
@@ -86,6 +93,9 @@ watch(() => prop.value, (newValue, oldValue) => {
     align-items: flex-end;
     padding: 0 0.2em 0 0.2em;
     overflow: hidden;
+
+    position: relative;
+    top: 50px;
   }
 
   .card {
