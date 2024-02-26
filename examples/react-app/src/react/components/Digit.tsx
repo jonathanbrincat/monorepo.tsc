@@ -5,6 +5,7 @@ import clsx from 'clsx'
 import './Digit.css'
 
 export default function Digit({ value }: { value: number}) {
+  const [pulse, setPulse] = useState(false)
   const [toggle, setToggle] = useState(true)
   const [flipped, setFlipped] = useState(false)
   const [previousValue, setPreviousValue] = useState(value)
@@ -46,6 +47,8 @@ export default function Digit({ value }: { value: number}) {
   // render asynchronously AFTER(concurrently) the render and the relow and/repaint
   useEffect(() => {
     if (value !== previousValue) {
+      setPulse(!pulse)
+
       // setToggle(false)
       setToggle(() => {
         return false
@@ -86,7 +89,7 @@ export default function Digit({ value }: { value: number}) {
   // in: { rotateX: -90, transitionEnd: { display: 'none' } },
   // out: { rotateX: 0, transitionEnd: { display: 'none' } },
   useEffect(() => {
-    if (flipped) {
+    // if (flipped) {
       const enterAnimation = async () => {
         await animate1(scope1.current, { display: 'block', transformPerspective: 600, rotateX: [0, -90], transitionEnd: { display: 'none' } }, { type: 'tween', duration: 0.4, ease: 'linear' })
         await animate2(scope2.current, { display: 'block', transformPerspective: 600, rotateX: [90, 0], transitionEnd: { display: 'none' } }, { type: 'tween', duration: 0.4, ease: 'linear' })
@@ -98,7 +101,7 @@ export default function Digit({ value }: { value: number}) {
       }
       enterAnimation()
 
-    }
+    // }
     // else {
     //   const exitAnimation = async () => {
     //     await animate1(scope1.current, { rotateX: 0 }, { type: 'tween', duration: 0.4 })
@@ -106,7 +109,7 @@ export default function Digit({ value }: { value: number}) {
     //   }
     //   exitAnimation()
     // }
-  }, [flipped])
+  }, [pulse])
 
   async function onDigitAfterLeave1(event) {
     // event.stopPropagation()
@@ -252,7 +255,8 @@ export default function Digit({ value }: { value: number}) {
         </div>
 
       </div> */}
-      <p className="text-xs mt-16">toggle: {JSON.stringify(toggle)}</p>
+      <p className="text-xs mt-16">pulse: {JSON.stringify(pulse)}</p>
+      <p className="text-xs">toggle: {JSON.stringify(toggle)}</p>
       <p className="text-xs">previousValue: {JSON.stringify(previousValue)}</p>
     </div>
   )
