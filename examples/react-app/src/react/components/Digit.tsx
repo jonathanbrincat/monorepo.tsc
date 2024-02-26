@@ -4,6 +4,20 @@ import clsx from 'clsx'
 
 import './Digit.css'
 
+// BUGS:
+// the animation running on mount is potentially causing issues by trigger false positives; i think to get around this framer has a helper effect that use to check if mounted or somthing also this might help
+//  https://stackoverflow.com/questions/67626851/avoiding-framer-motion-initial-animations-on-mount
+// the :after needs to switch to the current number when the animated bottom half finishes.
+// i don't use this orchestration in the vue version, so how am i getting away with it?
+// i dont actually display none with the vue version it seems.
+// it looks like the bottom slide doesn't start with an initial rotation of 90. so obscures the number behind it. until it shifts to animate.
+// https://stackoverflow.com/questions/76635299/how-to-setup-the-initial-value-with-framer-motion-useanimate-hook
+// the top car is also not visible like the vue version. but not sure this is having a negative effect
+// okay what needs to happen is as soon as the animation starts from the top, the bottom half needs to disappear or reset to 90deg. it currently stays put and awaits its turn in the sequence. the bottom half is good to stay planted until the top animation starts
+
+// TODO: turn framer motion animation into custom hook
+// move css into own library @brincat/styles
+
 export default function Digit({ value }: { value: number}) {
   const [pulse, setPulse] = useState(false)
   const [toggle, setToggle] = useState(true)
@@ -23,6 +37,12 @@ export default function Digit({ value }: { value: number}) {
   const [scope2, animate2] = useAnimate()
   const [isPresent, safeToRemove] = usePresence()
 
+  const [shouldStartAnimation, setShouldStartAnimation] = useState(false)
+
+  useEffect(() => {
+    setShouldStartAnimation(true)
+  }, [])
+
   // render synchronously BEFORE react renders and forces a batch reflow/repaint
   useLayoutEffect(() => {
     if (value !== previousValue) {
@@ -34,7 +54,7 @@ export default function Digit({ value }: { value: number}) {
     // JB: exploits cleanup mechanic and captured closure of differing variable scope
     // return () => setPreviousValue(value)
     return () => {
-      setPreviousValue(value)
+      // setPreviousValue(value)
       // setPreviousValue(() => {
       //   return value
       // })
@@ -55,9 +75,9 @@ export default function Digit({ value }: { value: number}) {
     // return () => setPreviousValue(value)
     return () => {
       // setPreviousValue(value)
-      // setPreviousValue(() => {
-      //   return value
-      // })
+      setPreviousValue(() => {
+        return value
+      })
     }
   }, [value])
 
@@ -84,10 +104,17 @@ export default function Digit({ value }: { value: number}) {
   // out: { rotateX: 0, transitionEnd: { display: 'none' } },
   useEffect(() => {
     // if (flipped) {
+    if (shouldStartAnimation) {
       const enterAnimation = async () => {
-        await animate1(scope1.current, { display: 'block', transformPerspective: 400, rotateX: [0, -90], transitionEnd: { display: 'none' } }, { type: 'tween', duration: 0.4, ease: 'linear' })
-        await animate2(scope2.current, { display: 'block', transformPerspective: 400, rotateX: [90, 0], transitionEnd: { display: 'none' } }, { type: 'tween', duration: 0.4, ease: 'linear' })
+        // await animate1(scope1.current, { display: 'flex', rotateX: [0, -90], transitionEnd: { display: 'none' } }, { type: 'tween', duration: 0.3, ease: 'linear' })
+        // await animate2(scope2.current, { display: 'flex', rotateX: [90, 0], transitionEnd: { display: 'none' } }, { type: 'tween', duration: 0.3, ease: 'linear' })
 
+        animate2(scope2.current, { rotateX: [90]}, { type: 'tween', duration: 0, ease: 'linear' }) // JB: bodge. need to reset back to 90deg. don't know a better way
+        await animate1(scope1.current, { rotateX: [0, -90] }, { type: 'tween', duration: 0.3, ease: 'linear' })
+        await animate2(scope2.current, { rotateX: [90, 0]}, { type: 'tween', duration: 0.3, ease: 'linear' })
+        
+        setToggle(true)
+        
         // animate([
         //   ['div.foo', { display: 'block', transformPerspective: 600, rotateX: [0, -90], transitionEnd: { display: 'none' } }, { type: 'tween', duration: 0.4, ease: 'linear' }],
         //   ['div.bar', { display: 'block', transformPerspective: 600, rotateX: [90, 0], transitionEnd: { display: 'none' } }, { type: 'tween', duration: 0.4, ease: 'linear' }]
@@ -95,7 +122,7 @@ export default function Digit({ value }: { value: number}) {
       }
       enterAnimation()
 
-    // }
+    }
     // else {
     //   const exitAnimation = async () => {
     //     await animate1(scope1.current, { rotateX: 0 }, { type: 'tween', duration: 0.4 })
@@ -219,8 +246,8 @@ export default function Digit({ value }: { value: number}) {
       <div>
         <div className="digit" data-before={Math.abs(value % 10)} data-after={Math.abs(previousValue % 10)}>
           <div 
-            className="card card-top card-top-leave-active"
-            style={toggle ? {display: 'none'} : {}} 
+            className="card card-top"
+            // style={toggle ? {display: 'none'} : {}}
             // ref={foo}
             ref={scope1}
             // onTransitionEnd={onDigitAfterLeave1}
@@ -240,7 +267,7 @@ export default function Digit({ value }: { value: number}) {
         </div>
 
         <div>
-          <p className="text-xs mt-16">pulse: {JSON.stringify(pulse)}</p>
+          <p className="text-xs mt-12">pulse: {JSON.stringify(pulse)}</p>
           <p className="text-xs">toggle: {JSON.stringify(toggle)}</p>
           <p className="text-xs">previousValue: {JSON.stringify(previousValue)}</p>
         </div>

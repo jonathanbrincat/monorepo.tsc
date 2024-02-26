@@ -10,7 +10,7 @@ const state = reactive({
   previousValue: 0,
 })
 
-async function onDigitAfterLeave(event) {
+async function onDigitAfterLeave() {
   state.toggle = true
 }
 
@@ -31,7 +31,7 @@ watch(() => prop.value, (newValue, oldValue) => {
             {{ state.toggle ? Math.abs(prop.value % 10) : Math.abs(state.previousValue % 10) }}
           </div>
 
-          <!-- DEVNOTE: here I exploit v-if and the mechanic of injecting into the dom before the reactivity can effect a repaint to cache the previous value and update with a fresh pain after the transition. This avoids having to otherwise manage and orchestrate with logic and removes other potential overheads such as rolling over zero between base-10 and base-6(which would otherwise need to be handled), and by limiting the control logic and the component functionally pure(you feed a prop in and the same prop output pops out) it can handle incrementing and decrementing values without intervention;
+          <!-- DEVNOTE: here I exploit v-if and the mechanic of injecting into the dom before the reactivity can effect a repaint to cache the previous value and update with a fresh paint after the transition. This avoids having to otherwise manage and orchestrate with logic and removes other potential overheads such as rolling over zero between base-10 and base-6(which would otherwise need to be handled), and by limiting the control logic and the component functionally pure(you feed a prop in and the same prop output pops out) it can handle incrementing and decrementing values without intervention;
           although a v-if is more expensive than a v-show. I feel the advantages + development experience outweigh the cost + there is a reduced logic footprint so less to execute so you're getting some return -->
           <!-- <div class="card card-top" v-if="state.toggle">{{ Math.abs(prop.value % 10) }}</div> -->
         </Transition>
@@ -41,6 +41,12 @@ watch(() => prop.value, (newValue, oldValue) => {
             {{ Math.abs(prop.value % 10) }}
           </div> 
         </Transition>
+
+      </div>
+
+      <div>
+        <p className="text-xs mt-12">toggle: {{ JSON.stringify(state.toggle) }}</p>
+        <p className="text-xs">previousValue: {{ JSON.stringify(state.previousValue) }}</p>
       </div>
     </div>
   </div>
@@ -78,7 +84,8 @@ watch(() => prop.value, (newValue, oldValue) => {
     overflow: hidden;
 
     position: relative;
-    bottom: 50px;
+    /* bottom: 40px; */
+    background: yellow;
   }
 
   .digit:after {
@@ -95,7 +102,8 @@ watch(() => prop.value, (newValue, oldValue) => {
     overflow: hidden;
 
     position: relative;
-    top: 50px;
+    /* top: 40px; */
+    background: yellow;
   }
 
   .card {

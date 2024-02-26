@@ -29,7 +29,8 @@
   overflow: hidden;
 
   position: relative;
-  /* bottom: 50px; */
+  /* bottom: 40px; */
+  background: yellow;
 }
 
 .digit:after {
@@ -46,7 +47,8 @@
   overflow: hidden;
 
   position: relative;
-  /* top: 50px; */
+  /* top: 40px; */
+  background: yellow;
 }
 
 .card {
@@ -67,6 +69,8 @@
   transform-origin: bottom;
   transform-style: preserve-3d;
   z-index: 1;
+
+  transform: rotateX(0deg);
 }
 
 .card-bottom {
@@ -79,7 +83,7 @@
   transform-origin: top;
   z-index: 1;
 
-  /* transition: background-color 300ms ease-out 300ms; */
+  transform: rotateX(90deg);
 }
 
 /* .card-top-leave-active {
@@ -99,12 +103,10 @@
 }
 
 .card-bottom-leave-from {
-  background-color: red;
   transform: rotateX(90deg);
 }
 
 .card-bottom-leave-to {
-  background-color: green;
   transform: rotateX(0deg);
 } */
 
