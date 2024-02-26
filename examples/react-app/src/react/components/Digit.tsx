@@ -1,26 +1,15 @@
 import React, { useState, useRef, useEffect, useLayoutEffect } from 'react'
 import { motion, AnimatePresence, useAnimate, usePresence } from 'framer-motion'
-import { animated, useSpring } from '@react-spring/web'
 import clsx from 'clsx'
 
 import './Digit.css'
+
+const data = ['hi', 'there!']
 
 export default function Digit({ value }: { value: number}) {
   const [toggle, setToggle] = useState(true)
   const [flipped, setFlipped] = useState(false)
   const [previousValue, setPreviousValue] = useState(value)
-
-  // const [springs, api] = useSpring(() => (
-  //   {
-  //     transform: `perspective(600px) rotateX(${flipped ? 180 : 0}deg)`,
-  //   }
-  // ))
-
-  const { transform, opacity } = useSpring({
-    opacity: flipped ? 1 : 0,
-    transform: `perspective(600px) rotateX(${flipped ? -90 : 0}deg)`,
-    config: { mass: 5, tension: 500, friction: 80 },
-  })
 
   const foo: React.MutableRefObject<T | null> = useRef(null)
   const bar: React.MutableRefObject<T | null> = useRef(null)
@@ -213,36 +202,6 @@ export default function Digit({ value }: { value: number}) {
   return (
     <div className="ui__digit text-sm">
       <div className="libs">
-        {/* react spring */}
-        {/* <animated.div
-          style={{
-            width: 80,
-            height: 80,
-            background: '#ff6d6d',
-            borderRadius: 8,
-            ...springs,
-          }}
-        /> */}
-
-        <div className="demo" onClick={() => setFlipped(state => !state)}>
-          <animated.div
-            className="demo__card card-back"
-            style={{
-              // opacity: opacity.to(o => 1 - o),
-              transform
-            }}
-          >Top</animated.div>
-          
-          <animated.div
-            className="demo__card card-front"
-            style={{
-              // opacity,
-              transform,
-              rotateX: '90deg',
-            }}
-          >Bottom</animated.div>
-        </div>
-
         {/* framer motion */}
         {/* <div className="demo" onClick={() => setFlipped(state => !state)}> */}
           {/* <AnimatePresence initial={false}>
@@ -301,7 +260,7 @@ export default function Digit({ value }: { value: number}) {
           } */}
         {/* </div> */}
 
-        {
+        {/* {
           flipped && (
             <motion.div
               className="demo"
@@ -326,12 +285,12 @@ export default function Digit({ value }: { value: number}) {
               >Bottom</motion.div>
             </motion.div>
           )
-        }
+        } */}
 
-        <div className="demo" ref={scope} onClick={() => setFlipped(state => !state)}>
+        {/* <div className="demo" ref={scope} onClick={() => setFlipped(state => !state)}>
           <div className="demo__card card-back foo" ref={scope1}>Top 1</div>
           <div className="demo__card card-front bar" ref={scope2}>Bottom 1</div>
-        </div>
+        </div> */}
 
         {/* <div className="demo" onClick={() => setFlipped(state => !state)}>
           <AnimatePresence>
