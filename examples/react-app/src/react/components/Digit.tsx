@@ -10,8 +10,8 @@ export default function Digit({ value }: { value: number}) {
   const [flipped, setFlipped] = useState(false)
   const [previousValue, setPreviousValue] = useState(value)
 
-  const foo: React.MutableRefObject<T | null> = useRef(null)
-  const bar: React.MutableRefObject<T | null> = useRef(null)
+  // const foo: React.MutableRefObject<T | null> = useRef(null)
+  // const bar: React.MutableRefObject<T | null> = useRef(null)
 
   const variants = {
     in: { rotateX: -90, transitionEnd: { display: 'none' } },
@@ -31,9 +31,6 @@ export default function Digit({ value }: { value: number}) {
       // setToggle(true)
     }
 
-    bar.current?.classList.remove('card-bottom-leave-to')
-    bar.current?.classList.add('card-bottom-leave-from')
-
     // JB: exploits cleanup mechanic and captured closure of differing variable scope
     // return () => setPreviousValue(value)
     return () => {
@@ -49,10 +46,7 @@ export default function Digit({ value }: { value: number}) {
     if (value !== previousValue) {
       setPulse(!pulse)
 
-      // setToggle(false)
-      setToggle(() => {
-        return false
-      })
+      setToggle(false)
     }
 
     // Cleanup function, executed before next render or unmount
@@ -91,8 +85,8 @@ export default function Digit({ value }: { value: number}) {
   useEffect(() => {
     // if (flipped) {
       const enterAnimation = async () => {
-        await animate1(scope1.current, { display: 'block', transformPerspective: 600, rotateX: [0, -90], transitionEnd: { display: 'none' } }, { type: 'tween', duration: 0.4, ease: 'linear' })
-        await animate2(scope2.current, { display: 'block', transformPerspective: 600, rotateX: [90, 0], transitionEnd: { display: 'none' } }, { type: 'tween', duration: 0.4, ease: 'linear' })
+        await animate1(scope1.current, { display: 'block', transformPerspective: 400, rotateX: [0, -90], transitionEnd: { display: 'none' } }, { type: 'tween', duration: 0.4, ease: 'linear' })
+        await animate2(scope2.current, { display: 'block', transformPerspective: 400, rotateX: [90, 0], transitionEnd: { display: 'none' } }, { type: 'tween', duration: 0.4, ease: 'linear' })
 
         // animate([
         //   ['div.foo', { display: 'block', transformPerspective: 600, rotateX: [0, -90], transitionEnd: { display: 'none' } }, { type: 'tween', duration: 0.4, ease: 'linear' }],
@@ -111,19 +105,9 @@ export default function Digit({ value }: { value: number}) {
     // }
   }, [pulse])
 
-  async function onDigitAfterLeave1(event) {
-    // event.stopPropagation()
-  }
-
-  async function onDigitAfterLeave2(event) {
-    // event.stopPropagation()
-
-    // setToggle(true)
-  }
-
   return (
-    <div className="ui__digit text-sm">
-      <div className="libs">
+    <div className="ui__digit">
+      <div className="libs text-sm">
         {/* framer motion */}
         {/* <div className="demo" onClick={() => setFlipped(state => !state)}> */}
           {/* <AnimatePresence initial={false}>
@@ -209,10 +193,10 @@ export default function Digit({ value }: { value: number}) {
           )
         } */}
 
-        <div className="demo" ref={scope} onClick={() => setFlipped(state => !state)}>
+        {/* <div className="demo" ref={scope} onClick={() => setFlipped(state => !state)}>
           <div className="demo__card card-back foo" ref={scope1}>Top 1</div>
           <div className="demo__card card-front bar" ref={scope2}>Bottom 1</div>
-        </div>
+        </div> */}
 
         {/* <div className="demo" onClick={() => setFlipped(state => !state)}>
           <AnimatePresence>
@@ -232,14 +216,14 @@ export default function Digit({ value }: { value: number}) {
         </div> */}
       </div>
       
-      {/* <div>
+      <div>
         <div className="digit" data-before={Math.abs(value % 10)} data-after={Math.abs(previousValue % 10)}>
-
           <div 
             className="card card-top card-top-leave-active"
             style={toggle ? {display: 'none'} : {}} 
-            ref={foo}
-            onTransitionEnd={onDigitAfterLeave1}
+            // ref={foo}
+            ref={scope1}
+            // onTransitionEnd={onDigitAfterLeave1}
           >
             {toggle ? Math.abs(value % 10) : Math.abs(previousValue % 10)}
           </div>
@@ -247,17 +231,20 @@ export default function Digit({ value }: { value: number}) {
           <div
             className="card card-bottom"
             // style={toggle ? { display: 'none' } : {}} 
-            ref={bar}
-            onTransitionEnd={onDigitAfterLeave2}
+            // ref={bar}
+            ref={scope2}
+            // onTransitionEnd={onDigitAfterLeave2}
           >
             {Math.abs(value % 10)}
           </div>
         </div>
 
-      </div> */}
-      <p className="text-xs mt-16">pulse: {JSON.stringify(pulse)}</p>
-      <p className="text-xs">toggle: {JSON.stringify(toggle)}</p>
-      <p className="text-xs">previousValue: {JSON.stringify(previousValue)}</p>
+        <div>
+          <p className="text-xs mt-16">pulse: {JSON.stringify(pulse)}</p>
+          <p className="text-xs">toggle: {JSON.stringify(toggle)}</p>
+          <p className="text-xs">previousValue: {JSON.stringify(previousValue)}</p>
+        </div>
+      </div>
     </div>
   )
 }

@@ -29,7 +29,7 @@
   overflow: hidden;
 
   position: relative;
-  bottom: 50px;
+  /* bottom: 50px; */
 }
 
 .digit:after {
@@ -46,7 +46,7 @@
   overflow: hidden;
 
   position: relative;
-  top: 50px;
+  /* top: 50px; */
 }
 
 .card {
@@ -79,10 +79,10 @@
   transform-origin: top;
   z-index: 1;
 
-  transition: background-color 300ms ease-out 300ms;
+  /* transition: background-color 300ms ease-out 300ms; */
 }
 
-.card-top-leave-active {
+/* .card-top-leave-active {
   transition: transform 300ms ease-in;
 }
 
@@ -95,36 +95,23 @@
 }
 
 .card-bottom-leave-active {
-  /* transition: transform 300ms ease-out 300ms; */
+  transition: transform 300ms ease-out 300ms;
 }
 
 .card-bottom-leave-from {
   background-color: red;
-  /* transform: rotateX(90deg); */
+  transform: rotateX(90deg);
 }
 
 .card-bottom-leave-to {
   background-color: green;
   transform: rotateX(0deg);
-}
-
-#test {
-  font-size: 14px;
-  width: 200px;
-  height: 200px;
-  border: 2px solid white;
-  margin: 2em 0;
-  display: flex;
-  place-content: center;
-  place-items: center;
-
-  /* transition: transform 500ms ease-in; */
-}
+} */
 
 /* temp override */
-.ui__digit {
+/* .ui__digit {
   width: 100%;
-}
+} */
 
 .libs {
   display: flex;
@@ -167,9 +154,4 @@
   transform-origin: top;
   /* transform-style: preserve-3d; */
   grid-row: 2/3;
-}
-
-.test {
-  background: red;
-  padding: 2em;
 }
