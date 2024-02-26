@@ -85,7 +85,7 @@ watch(() => prop.value, (newValue, oldValue) => {
 
     position: relative;
     /* bottom: 40px; */
-    background: yellow;
+    /* background: yellow; */
   }
 
   .digit:after {
@@ -103,7 +103,7 @@ watch(() => prop.value, (newValue, oldValue) => {
 
     position: relative;
     /* top: 40px; */
-    background: yellow;
+    /* background: yellow; */
   }
 
   .card {
