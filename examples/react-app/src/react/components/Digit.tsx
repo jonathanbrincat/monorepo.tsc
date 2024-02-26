@@ -4,8 +4,6 @@ import clsx from 'clsx'
 
 import './Digit.css'
 
-const data = ['hi', 'there!']
-
 export default function Digit({ value }: { value: number}) {
   const [toggle, setToggle] = useState(true)
   const [flipped, setFlipped] = useState(false)
@@ -26,9 +24,6 @@ export default function Digit({ value }: { value: number}) {
 
 
   useEffect(() => {
-    // console.log('top :: ', foo.current)
-    // console.log('bottom :: ', bar.current)
-
     /*
     foo.current?.addEventListener('transitionend', (event: React.SyntheticEvent<T>) => {
       console.log('transitionend :: top', event.target)
