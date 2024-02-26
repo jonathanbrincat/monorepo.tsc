@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect, useLayoutEffect, useInsertionEffect } from 'react'
-import { motion, AnimatePresence, useAnimate } from 'framer-motion'
+import React, { useState, useRef, useEffect, useLayoutEffect } from 'react'
+import { motion, AnimatePresence, useAnimate, usePresence } from 'framer-motion'
 import { animated, useSpring } from '@react-spring/web'
 import clsx from 'clsx'
 
@@ -25,67 +25,21 @@ export default function Digit({ value }: { value: number}) {
   const foo: React.MutableRefObject<T | null> = useRef(null)
   const bar: React.MutableRefObject<T | null> = useRef(null)
 
+  const variants = {
+    in: { rotateX: -90, transitionEnd: { display: 'none' } },
+    out: { rotateX: 0, transitionEnd: { display: 'none' } },
+  }
+
   const [scope, animate] = useAnimate()
+  const [scope1, animate1] = useAnimate()
+  const [scope2, animate2] = useAnimate()
+  const [isPresent, safeToRemove] = usePresence()
+
 
   useEffect(() => {
     // console.log('top :: ', foo.current)
     // console.log('bottom :: ', bar.current)
 
-    /**
-      .v-enter-active,
-      .v-leave-active {
-        transition: opacity 0.5s ease;
-      }
-
-      .v-enter-from,
-      .v-leave-to {
-        opacity: 0;
-      }
-    */
-
-    /*
-    v-enter-from
-      v-enter-active
-    v-enter-to
-
-    v-leave-from        .card-top-leave-from        card-bottom-leave-from
-      v-leave-active      .card-top-leave-active      card-bottom-leave-active
-    v-leave-to          .card-top-leave-to          card-bottom-leave-to
-
-    leave-from
-    Starting state for leave. Added immediately when a leaving transition is triggered, removed after one frame.
-
-    leave-active
-    Active state for leave. Applied during the entire leaving phase. Added immediately when a leaving transition is triggered, removed when the transition/animation finishes. This class can be used to define the duration, delay and easing curve for the leaving transition.
-
-    leave-to
-    Ending state for leave. Added one frame after a leaving transition is triggered (at the same time v-leave-from is removed), removed when the transition/animation finishes.
-    */
-
-    /*
-    1. value change => setToggle(true)
-    display flex both cards
-
-    BOTH ARE 'LEAVE' AS WE ARE MOVING FROM DISPLAYED(present) TO NOT BEING DISPLAY(removed) ON BOTH.
-    
-    2. add classes
-    .card-top-leave-active card-top-leave-from
-
-    .card-bottom-leave-active card-bottom-leave-from
-    
-    3. add classes - when? transitionstart?
-    card-top-leave-active card-top-leave-to 
-
-    card-bottom-leave-active card-bottom-leave-to
-
-    4. transitionend@bottom card => setToggle(false)
-    display none both cards
-    */
-
-    // addEventListener('transitionrun')
-
-    // @after-leave
-    // called when the leave transition has finished and the element has been removed from the DOM.
     /*
     foo.current?.addEventListener('transitionend', (event: React.SyntheticEvent<T>) => {
       console.log('transitionend :: top', event.target)
@@ -108,15 +62,6 @@ export default function Digit({ value }: { value: number}) {
     }
     */
   }, [])
-
-  /*
-  useInsertionEffect(() => {
-    // console.log('1. useInsertionEffect ', value, foo)
-    // You can’t update state from inside useInsertionEffect!!!
-
-    // bar.current?.classList.add('card-bottom-leave-to', 'card-bottom-leave-from')
-  }, [value])
-  */
 
   // render synchronously BEFORE react renders and forces a batch reflow/repaint
   useLayoutEffect(() => {
@@ -201,6 +146,50 @@ export default function Digit({ value }: { value: number}) {
     }
   }, [value])
 
+  // useEffect(() => {
+  //   if (isPresent) {
+  //     const enterAnimation = async () => {
+  //       await animate(scope.current, { opacity: 1 })
+  //       await animate("li", { opacity: 1, x: 0 })
+  //     }
+  //     enterAnimation()
+
+  //   } else {
+  //     const exitAnimation = async () => {
+  //       await animate('li', { opacity: 0, x: 100 })
+  //       await animate(scope.current, { opacity: 0 })
+  //       safeToRemove()
+  //     }
+  //     exitAnimation()
+  //   }
+  // }, [isPresent])
+
+
+  // in: { rotateX: -90, transitionEnd: { display: 'none' } },
+  // out: { rotateX: 0, transitionEnd: { display: 'none' } },
+  useEffect(() => {
+    if (flipped) {
+      const enterAnimation = async () => {
+        await animate1(scope1.current, { display: 'block', transformPerspective: 600, rotateX: [0, -90], transitionEnd: { display: 'none' } }, { type: 'tween', duration: 0.4, ease: 'linear' })
+        await animate2(scope2.current, { display: 'block', transformPerspective: 600, rotateX: [90, 0], transitionEnd: { display: 'none' } }, { type: 'tween', duration: 0.4, ease: 'linear' })
+
+        // animate([
+        //   ['div.foo', { display: 'block', transformPerspective: 600, rotateX: [0, -90], transitionEnd: { display: 'none' } }, { type: 'tween', duration: 0.4, ease: 'linear' }],
+        //   ['div.bar', { display: 'block', transformPerspective: 600, rotateX: [90, 0], transitionEnd: { display: 'none' } }, { type: 'tween', duration: 0.4, ease: 'linear' }]
+        // ])
+      }
+      enterAnimation()
+
+    }
+    // else {
+    //   const exitAnimation = async () => {
+    //     await animate1(scope1.current, { rotateX: 0 }, { type: 'tween', duration: 0.4 })
+    //     await animate2(scope2.current, { rotateX: -90 }, { type: 'tween', duration: 0.4 })
+    //   }
+    //   exitAnimation()
+    // }
+  }, [flipped])
+
   async function onDigitAfterLeave1(event) {
     // event.stopPropagation()
 
@@ -254,48 +243,46 @@ export default function Digit({ value }: { value: number}) {
           >Bottom</animated.div>
         </div>
 
-        {/* transform: `perspective(600px) rotateX(${flipped ? 180 : 0}deg)`, */}
-
         {/* framer motion */}
-        <div className="demo" onClick={() => setFlipped(state => !state)}>
-          {/* <AnimatePresence>
+        {/* <div className="demo" onClick={() => setFlipped(state => !state)}> */}
+          {/* <AnimatePresence initial={false}>
             {
               flipped && (
                 <motion.div
                   className="demo__card card-back"
-                  initial={false}
+                  key="top"
                   animate={{ rotateX: 0 }}
-                  exit={{ rotateX: 90 }}
+                  exit={{ rotateX: -90 }}
                   transition={{ type: 'tween', duration: 0.5 }}
-                  style={{ transformPerspective: 600 }}
+                  style={{ transformPerspective: 800 }}
                 >Top</motion.div>
               )
             }
-          </AnimatePresence>
-          <AnimatePresence>
             {
               !flipped && (
                 <motion.div
                   className="demo__card card-front"
-                  initial={false}
+                  key="bottom"
                   animate={{ rotateX: 90 }}
                   exit={{ rotateX: 0 }}
                   transition={{ type: 'tween', duration: 0.5 }}
-                  style={{ transformPerspective: 600 }}
+                  style={{ transformPerspective: 800 }}
                 >Bottom</motion.div>
               )
             }
           </AnimatePresence> */}
 
-          {
+          {/* {
             flipped && (
               <motion.div
                 layout
                 className="demo__card card-back"
+                variants={variants}
                 initial={{ rotateX: 0 }}
-                animate={{ rotateX: -90, transitionEnd: { display: 'none' } }}
+                animate="in"
                 transition={{ type: 'tween', duration: 0.5 }}
-                style={{ transformPerspective: 600 }}
+                style={{ transformPerspective: 800 }}
+                
               >Top</motion.div>
             )
           }
@@ -304,29 +291,66 @@ export default function Digit({ value }: { value: number}) {
               <motion.div
                 layout
                 className="demo__card card-front"
+                variants={variants}
                 initial={{ rotateX: 90 }}
-                animate={{ rotateX: 0, transitionEnd: { display: 'none' } }}
+                animate="out"
                 transition={{ type: 'tween', duration: 0.5 }}
-                style={{ transformPerspective: 600 }}
+                style={{ transformPerspective: 800 }}
               >Bottom</motion.div>
             )
-          }
+          } */}
+        {/* </div> */}
+
+        {
+          flipped && (
+            <motion.div
+              className="demo"
+              // animate={isToggle ? "in" : "out"}
+            >
+              <motion.div
+                className="demo__card card-back"
+                variants={variants}
+                initial={{ rotateX: 0 }}
+                animate="in"
+                transition={{ type: 'tween', duration: 0.5 }}
+                style={{ transformPerspective: 800 }}
+              >Top</motion.div>
+
+              <motion.div
+                className="demo__card card-front"
+                variants={variants}
+                initial={{ rotateX: 90 }}
+                animate="out"
+                transition={{ type: 'tween', duration: 0.5 }}
+                style={{ transformPerspective: 800 }}
+              >Bottom</motion.div>
+            </motion.div>
+          )
+        }
+
+        <div className="demo" ref={scope} onClick={() => setFlipped(state => !state)}>
+          <div className="demo__card card-back foo" ref={scope1}>Top 1</div>
+          <div className="demo__card card-front bar" ref={scope2}>Bottom 1</div>
         </div>
 
-        {/* <motion.div
-          animate={{
-            x: 0,
-            backgroundColor: "#000",
-            boxShadow: "10px 10px 0 rgba(0, 0, 0, 0.2)",
-            position: "fixed",
-            transitionEnd: {
-              display: "none",
-            },
-          }}
-        /> */}
+        {/* <div className="demo" onClick={() => setFlipped(state => !state)}>
+          <AnimatePresence>
+            {
+              flipped ? (
+                <div key="dialog">
+                  <ul className="test" ref={scope}>
+                    <li>One</li>
+                    <li>Two</li>
+                    <li>Three</li>
+                  </ul>
+                </div>
+              )
+              : null
+            }
+          </AnimatePresence>          
+        </div> */}
       </div>
       
-
       {/* <div>
         <div className="digit" data-before={Math.abs(value % 10)} data-after={Math.abs(previousValue % 10)}>
 
