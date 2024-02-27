@@ -2,13 +2,13 @@
 import { reactive, onMounted, onUnmounted } from 'vue'
 import Countdown from './components/Countdown.vue'
 import CountdownTimer from '@brincat/core'
-import foo from '@brincat/vue'
+import Foo, { foobar } from '@brincat/vue'
 
 const state = reactive({
   countdownTimer: new CountdownTimer(36000000),
 })
 
-console.log(foo())
+console.log(foobar())
 
 onMounted(() => state.countdownTimer.start())
 onUnmounted(() => state.countdownTimer.stop())
@@ -55,10 +55,12 @@ onUnmounted(() => state.countdownTimer.stop())
     <section class="grid grid-cols-4 gap-8">
       <div class="col-start-2 col-span-3">
         <p class="text-xl my-4"><span class="text-emerald-600 block">Just a bit of fun really.</span>Here we have an elegant and fully-responsive countdown clock with simulated <span class="text-white">split-flap</span> numeric display; also more commonly known as a <span class="text-white">flip-clock</span> or sometimes a <span class="text-white">solari</span>. A commonly utilised skeuomorphism for a countdown or counter in UI.</p>
-          
+        
         <p>&#128161; Thought of the day: Why do we seek to recreate in the virtual world, what we know from the physical world?</p>
       </div>
     </section>
+
+    <Foo class="text-2xl" />
 
     <section class="flex justify-center my-16">
       <div class="display bg-slate-900 border-zinc-300 border-8 rounded-xl p-10" style="font-size: 142px;">

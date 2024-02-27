@@ -22,11 +22,14 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc",
-    "test": "node ./__tests__/react.test.js"
+    "build": "rm -rf ./dist && tsc -b tsconfig.cjs.json tsconfig.esm.json tsconfig.types.json",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "build:types": "tsc -p tsconfig.types.json",
+    "test": "npx lerna run build --scope=@brincat/react && jest"
   },
   "dependencies": {
-    "@brincat/react": "*"
+    "@brincat/core": "*"
   },
   "devDependencies": {
     "jest": "^29.7.0",
