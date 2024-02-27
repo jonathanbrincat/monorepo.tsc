@@ -18,6 +18,10 @@ import './Digit.css'
 // 1. turn framer motion animation into custom hook
 // 2. move css into own library @brincat/styles
 
+// INTERESTING APPROACH
+// https://github.com/sLeeNguyen/react-flip-clock-countdown - circa 3000+ weekly downloads. handles react animiations with css transitiona
+// https://www.npmjs.com/package/@pqina/flip - circa 4000+ weekly downloads. encapsulated with vanilla js and custom rendering engine. really slick animation.
+
 export default function Digit({ value }: { value: number}) {
   const [pulse, setPulse] = useState(false)
   const [toggle, setToggle] = useState(true)

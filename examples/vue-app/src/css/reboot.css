@@ -14,15 +14,6 @@ body {
     color 400ms,
     background-color 400ms;
   line-height: 1.6;
-  font-family:
-    Inter,
-    -apple-system,
-    BlinkMacSystemFont,
-    Roboto,
-    Oxygen,
-    Ubuntu,
-    'Helvetica Neue',
-    sans-serif;
   font-size: 15px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -31,11 +22,7 @@ body {
   place-items: center;
 }
 
-h1 {
-  font-size: 3rem;
-}
-
-a {
+p a {
   text-decoration: none;
   color: hsla(160, 100%, 37%, 1);
   transition: 0.4s;
@@ -43,7 +30,7 @@ a {
 }
 
 @media (hover: hover) {
-  a:hover {
+  p a:hover {
     background-color: hsla(160, 100%, 37%, 0.2);
   }
 }
