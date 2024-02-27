@@ -9,7 +9,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Inter", "-apple-system", "BlinkMacSystemFont", "Roboto", "Oxygen", "Ubuntu", "Helvetica Neue", ...defaultTheme.fontFamily.sans],
+        sans: ["Outfit", "Commissioner", "Red Hat Display", "-apple-system", "BlinkMacSystemFont", "Helvetica Neue", ...defaultTheme.fontFamily.sans],
         hero: ["Galindo", defaultTheme.fontFamily.sans],
         mono: ["Sometype Mono", defaultTheme.fontFamily.mono],
       },

@@ -17,6 +17,28 @@
   }
 }
 
+.display {
+  box-shadow: 0 0 32px 6px #000 inset;
+  position: relative;
+}
+
+.ui__countdown {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.ui__countdown:before {
+  content: '';
+  background-color: #2d0000;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  position: relative;
+  display: block;
+  box-shadow: 0 0 8px 3px #000 inset;
+}
+
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);

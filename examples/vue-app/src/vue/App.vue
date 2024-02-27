@@ -18,13 +18,9 @@ onUnmounted(() => state.countdownTimer.stop())
 
       <div class="flex flex-col">
         <h1 class="title font-hero text-emerald-600 font-semibold text-6xl tracking-wide">
-          FlipFlapFlop
-          <!-- split-flap-clock. split-flap. split-flap-flip. flip-flap-clock. flip-flap-flop splittery-flappery-flip. flip clock. flap clock. flip-countdown. flip-count.flip-flop-goes-the-clock. flip-flop. flip-flap. flip you off. flipping the bird. flip-mode-squad. solari -->
-          
-          <!-- Vue Boilerplate -->
+          FlipFlapFlop       
         </h1>
-        <p class="text-2xl">
-          Demonstration hosted in
+        <p class="text-2xl">Demonstration hosted in
           <a href="https://vitejs.dev/" target="_blank" rel="noopener">Vite</a> +
           <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue 3</a>
         </p>
@@ -55,33 +51,45 @@ onUnmounted(() => state.countdownTimer.stop())
   </header>
 
   <main class="container mx-auto flex flex-col">
-    <section>
-      <p class="text-xl my-4">An elegant and fully-responsive countdown clock with simulated split-flap numeric display; also more commonly known as a flip-clock or sometimes a solari. A commonly utilised skeuomorphism for a countdown or counter in UI.</p>
+    <section class="grid grid-cols-4 gap-8">
+      <div class="col-start-2 col-span-3">
+        <p class="text-xl my-4"><span class="text-emerald-600 block">Just a bit of fun really.</span>Here we have an elegant and fully-responsive countdown clock with simulated <span class="text-white">split-flap</span> numeric display; also more commonly known as a <span class="text-white">flip-clock</span> or sometimes a <span class="text-white">solari</span>. A commonly utilised skeuomorphism for a countdown or counter in UI.</p>
+          
+        <p>&#128161; Thought of the day: Why do we seek to recreate in the virtual world, what we know from the physical world?</p>
+      </div>
+    </section>
 
-      <p class="text-xl my-4">It's not the most super <sup>&#042;</sup>advanced, all-singing, all-dancing, unneccesarily over-elaborate carbuncle. But it is honest and well-engineered. Developer friendly and requires little investment to consume.</p>
-
-      <p class="text-xl my-4">Can be used as a countdown, stopwatch or just a regular clock and each constituent runtime has been kept encapsulated from the UI to produce a headless engine for each feature. So a treatment can be consumed independent of any specific implementation. This option is omnipresent in the @core package. Nonetheless, there are prebaked packages available for the usual suspects, Vue and React.</p>
-
-      <div class="flex justify-center my-16" style="font-size: 142px;">
+    <section class="flex justify-center my-16">
+      <div class="display bg-slate-900 border-zinc-300 border-8 rounded-xl p-10" style="font-size: 142px;">
         <!-- JB: this will eventually come from @brincat/vue -->
         <Countdown :duration="state.countdownTimer.tick" />
       </div>
     </section>
 
-    <section class="flex justify-center">
+    <section class="grid grid-cols-4 gap-8">
+      <div class="flex justify-end">
+        <h3 class="text-xl my-4">Installation</h3>
+      </div>
+
+      <div class="col-start-2 col-span-3 flex justify-center">
 <pre class="bg-black px-6 py-4 rounded-md"><code class="text-zinc-400"># NPM </code>
 <code class="text-lime-400">npm install @flipflapflop/vue</code>
         
 <code class="text-zinc-400"># Yarn </code>
 <code class="text-lime-400">yarn add @flipflapflop/vue</code></pre>
+      </div>
     </section>
+
+    <hr class="my-16" />
     
-    <section>
-      <h3 class="my-4">Usage</h3>
+    <section class="grid grid-cols-4 gap-8">
+      <div class="flex justify-end">
+        <h3 class="text-xl my-4">Usage</h3>
+      </div>
     </section>
   </main>
 
-  <footer class="flex justify-end items-center">Authored and maintained by &copy; pix8 {{ new Date().getUTCFullYear() }}</footer>
+  <footer class="flex justify-end items-center py-4">Authored and maintained by &copy; pix8 {{ new Date().getUTCFullYear() }}</footer>
 </template>
 
 <style scoped>
@@ -101,6 +109,28 @@ onUnmounted(() => state.countdownTimer.stop())
   .logo {
     animation: logo-spin infinite 20s linear;
   }
+}
+
+.display {
+  box-shadow: 0 0 32px 6px #000 inset;
+  position: relative;
+}
+
+.ui__countdown {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.ui__countdown:before {
+  content: '';
+  background-color: #2d0000;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  position: relative;
+  display: block;
+  box-shadow: 0 0 8px 3px #000 inset;
 }
 
 @keyframes logo-spin {

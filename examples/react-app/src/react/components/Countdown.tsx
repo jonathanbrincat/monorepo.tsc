@@ -44,12 +44,12 @@ export default function Countdown({ className = '', duration = 5000 }: ICountdow
         <Digit value={units(time.seconds)} />
       </div>
 
-      <div>
+      {/* <div>
         <ul className="text-[14px] flex justify-between gap-4 my-4">
           <li>{duration}</li>
           <li>{`${time.hours}`.padStart(2, '0')} : {`${time.minutes}`.padStart(2, '0')} : {`${time.seconds}`.padStart(2, '0')} : {`${time.milliseconds}`.padStart(2, '0')}</li>
         </ul>
-      </div>
+      </div> */}
     </div>
   )
 }

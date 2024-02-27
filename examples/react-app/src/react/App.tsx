@@ -25,11 +25,8 @@ export default function App() {
           <div className="flex flex-col">
             <h1 className="title font-hero text-cyan-600 font-semibold text-6xl tracking-wide">
               FlipFlapFlop
-
-              {/* React Boilerplate */}
             </h1>
-            <p className="text-2xl">
-              Demonstration hosted in
+            <p className="text-2xl">Demonstration hosted in
               <a href="https://vitejs.dev/" target="_blank" rel="noopener">Vite</a> +
               <a href="https://react.dev/" target="_blank" rel="noopener">React</a>
             </p>
@@ -58,33 +55,45 @@ export default function App() {
       </header>
       
       <main className="container mx-auto flex flex-col">
-        <section>
-          <p className="text-xl my-4">An elegant and fully-responsive countdown clock with simulated split-flap numeric display; also more commonly known as a flip-clock or sometimes a solari. A commonly utilised skeuomorphism for a countdown or counter in UI.</p>
+        <section className="grid grid-cols-4 gap-8">
+          <div className="col-start-2 col-span-3">
+            <p className="text-xl my-4">Just a bit of fun really.<br />Here we have an elegant and fully-responsive countdown clock with simulated split-flap numeric display; also more commonly known as a flip-clock or sometimes a solari. A commonly utilised skeuomorphism for a countdown or counter in UI.</p>
 
-          <p className="text-xl my-4">It's not the most super <sup>&#042;</sup>advanced, all-singing, all-dancing, unneccesarily over-elaborate carbuncle. But it is honest and well-engineered. Developer friendly and requires little investment to consume.</p>
+            <p>&#128161; Thought of the day: Why do we seek to recreate in the virtual world, what we know from the physical world?</p>
+          </div>
+        </section>
 
-          <p className="text-xl my-4">Can be used as a countdown, stopwatch or just a regular clock and each constituent runtime has been kept encapsulated from the UI to produce a headless engine for each feature. So a treatment can be consumed independent of any specific implementation. This option is omnipresent in the @core package. Nonetheless, there are prebaked packages available for the usual suspects, Vue and React.</p>
-
-          <div className="flex justify-center my-16" style={{ fontSize: '142px' }}>
+        <section className="flex justify-center my-16">
+          <div className="display bg-slate-900 border-zinc-300 border-8 rounded-xl p-10" style={{ fontSize: '142px' }}>
             {/* <!-- JB: this will eventually come from @brincat/react --> */}
             <Countdown duration={tick} />
           </div>
         </section>
 
-        <section className="flex justify-center">
+        <section className="grid grid-cols-4 gap-8">
+          <div className="flex justify-end">
+            <h3 className="text-xl my-4">Installation</h3>
+          </div>
+
+          <div className="col-start-2 col-span-3 flex justify-center">
 <pre className="bg-black px-6 py-4 rounded-md"><code className="text-zinc-400"># NPM </code>
   <code className="text-lime-400">npm install @flipflapflop/vue</code>
 
   <code className="text-zinc-400"># Yarn </code>
   <code className="text-lime-400">yarn add @flipflapflop/vue</code></pre>
+          </div>
         </section>
 
-        <section>
-          <h3 className="my-4">Usage</h3>
+        <hr className="my-16" />
+
+        <section className="grid grid-cols-4 gap-8">
+          <div className="flex justify-end">
+            <h3 className="text-xl my-4">Usage</h3>
+          </div>
         </section>
       </main>
 
-      <footer className="flex justify-end items-center">Authored and maintained by &copy; pix8 { new Date().getUTCFullYear() }</footer>
+      <footer className="flex justify-end items-center py-4">Authored and maintained by &copy; pix8 { new Date().getUTCFullYear() }</footer>
     </>
   )
 }

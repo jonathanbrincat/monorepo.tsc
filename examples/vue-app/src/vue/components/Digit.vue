@@ -41,13 +41,12 @@ watch(() => prop.value, (newValue, oldValue) => {
             {{ Math.abs(prop.value % 10) }}
           </div> 
         </Transition>
-
       </div>
 
-      <div>
+      <!-- <div>
         <p className="text-xs mt-12">toggle: {{ JSON.stringify(state.toggle) }}</p>
         <p className="text-xs">previousValue: {{ JSON.stringify(state.previousValue) }}</p>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

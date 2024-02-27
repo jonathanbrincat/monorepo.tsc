@@ -42,12 +42,12 @@ function units(n: number) {
       <Digit :value="units(time.seconds)" />
     </div>
 
-    <div>
+    <!-- <div>
       <ul class="text-[14px] flex justify-between gap-4 my-4">
         <li>{{ props.duration }}</li>
         <li>{{ `${time.hours}`.padStart(2, '0') }} : {{ `${time.minutes}`.padStart(2, '0') }} : {{ `${time.seconds}`.padStart(2, '0') }} : {{ `${time.milliseconds}`.padStart(2, '0') }}</li>
       </ul>
-    </div>
+    </div> -->
   </div>
 </template>
 
