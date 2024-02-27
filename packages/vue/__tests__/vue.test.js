@@ -1,7 +1,7 @@
-'use strict';
+const { isOdd } = require('../dist/cjs/index.js');
 
-const vue = require('..');
-const assert = require('assert').strict;
-
-assert.strictEqual(vue(), 'Hello from vue');
-console.info('vue tests passed');
+test("isOdd", () => {
+  expect(isOdd(1)).toBe(true);
+  expect(isOdd(2)).toBe(false);
+  expect(isOdd(3)).toBe(true);
+});

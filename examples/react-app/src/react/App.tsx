@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import Countdown from './components/Countdown.tsx'
 import CountdownTimer from '@brincat/core'
+// import CountdownTimer from '@brincat/react'
 import reactLogo from '../svg/logo_react.svg'
 
 import './app.css'
@@ -57,7 +58,7 @@ export default function App() {
       <main className="container mx-auto flex flex-col">
         <section className="grid grid-cols-4 gap-8">
           <div className="col-start-2 col-span-3">
-            <p className="text-xl my-4">Just a bit of fun really.<br />Here we have an elegant and fully-responsive countdown clock with simulated split-flap numeric display; also more commonly known as a flip-clock or sometimes a solari. A commonly utilised skeuomorphism for a countdown or counter in UI.</p>
+            <p className="text-xl my-4"><span className="text-cyan-600 block">Just a bit of fun really.</span>Here we have an elegant and fully-responsive countdown clock with simulated <span className="text-white">split-flap</span> numeric display; also more commonly known as a <span className="text-white">flip-clock</span> or sometimes a <span className="text-white">solari</span>. A commonly utilised skeuomorphism for a countdown or counter in UI.</p>
 
             <p>&#128161; Thought of the day: Why do we seek to recreate in the virtual world, what we know from the physical world?</p>
           </div>
