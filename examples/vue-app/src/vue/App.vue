@@ -2,13 +2,13 @@
 import { reactive, onMounted, onUnmounted } from 'vue'
 import Countdown from './components/Countdown.vue'
 import CountdownTimer from '@brincat/core'
-import Foo, { foobar } from '@brincat/vue'
+import Foobar, { foo } from '@brincat/vue'
 
 const state = reactive({
   countdownTimer: new CountdownTimer(36000000),
 })
 
-console.log(foobar())
+console.log('hiya ', foo())
 
 onMounted(() => state.countdownTimer.start())
 onUnmounted(() => state.countdownTimer.stop())
@@ -60,7 +60,7 @@ onUnmounted(() => state.countdownTimer.stop())
       </div>
     </section>
 
-    <Foo class="text-2xl" />
+    <Foobar class="text-2xl" />
 
     <section class="flex justify-center my-16">
       <div class="display bg-slate-900 border-zinc-300 border-8 rounded-xl p-10" style="font-size: 142px;">
