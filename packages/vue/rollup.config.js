@@ -1,9 +1,9 @@
 import peerDepsExternal from 'rollup-plugin-peer-deps-external'
 import resolve from '@rollup/plugin-node-resolve'
-// import commonjs from '@rollup/plugin-commonjs' // haven't activated yet. awaiting stable build
+import commonjs from '@rollup/plugin-commonjs' // haven't activated yet. awaiting stable build. although technically this is option. practicality-wise it is needed because you can safeguard you won't be consuming cjs from 3rd party dependencies
 import typescript from '@rollup/plugin-typescript'
 import vue from '@vitejs/plugin-vue'
-// import vueJsx from '@vitejs/plugin-vue-jsx' // not really needed yet. haven't moved to jsx in vue
+// import vueJsx from '@vitejs/plugin-vue-jsx' // not really needed yet. haven't moved to jsx in vue. is there a react equivalent? does there need to be? tsconfig seems to handle this for react.
 import postcss from 'rollup-plugin-postcss'
 import terser from '@rollup/plugin-terser'
 import pkg from './package.json' assert { type: 'json' } // import asseting required or else Node complains attempting to load upon build // NOTE: if you get an error when using the 'assert' key word, use the 'with' keyword instead
@@ -36,7 +36,7 @@ export default [
   {
     input: 'lib/index.ts',
     // external: ['ms'],
-    // external: ['@brincat/core'],
+    external: ['@brincat/core'], // should list npm dependencies(as oppose to dev dependencies)
     output: [
       {
         file: 'dist/esm/index.js',
@@ -58,7 +58,7 @@ export default [
     plugins: [
       peerDepsExternal(),
       resolve(),
-      // commonjs(),
+      commonjs(),
       vue(),
       typescript(), // so Rollup can convert TypeScript to JavaScript // typescript({ tsconfig: './tsconfig.json', sourceMap: true, }),
       postcss(),
@@ -142,3 +142,12 @@ lib/index.ts: (1:34)
 [!] RollupError: Expression expected (Note that you need plugins to import files that are not JavaScript)
 lib/Foobar.vue?vue&type=style&index=0&scoped=5a15da39&lang.css (2:0)
  */
+
+/* 
+USEFUL REFERENCE - lol this is stuff I was doing back in 2017!! obviously times have moved on. They're even copying my file structure convention now! Stuff that used to be ignored and taken for granted, that I agonised over to get right, architecture and inclusion of tests specs and story book. parent index.js exports too. It's like someone copied one of my old component libraries! Not that anyone used to listen to me back then. Obviously I was a pioneer lol or maybe I was just onto a good thing because I know my shit.
+https://dev.to/alexeagleson/how-to-create-and-publish-a-react-component-library-2oe
+https://dev.to/siddharthvenkatesh/component-library-setup-with-react-typescript-and-rollup-onj
+https://blog.harveydelaney.com/creating-your-own-react-component-library/
+https://medium.com/@tomaszmularczyk89/guide-to-building-a-react-components-library-with-rollup-and-styled-jsx-694ec66bd2
+https://medium.com/grandata-engineering/how-i-set-up-a-react-component-library-with-rollup-be6ccb700333
+*/

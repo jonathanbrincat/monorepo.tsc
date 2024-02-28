@@ -1,0 +1,22 @@
+.button {
+  background-color: aliceblue;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  min-height: 32px;
+  cursor: pointer;
+}
+
+.button-primary {
+  background: purple;
+}
+
+.button-secondary {
+  background-color: cyan;
+}
+
+.button-error {
+  background-color: red;
+}
