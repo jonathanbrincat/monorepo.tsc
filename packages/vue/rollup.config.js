@@ -1,8 +1,10 @@
-// import resolve from '@rollup/plugin-node-resolve'
-// import commonjs from '@rollup/plugin-commonjs'
+import peerDepsExternal from 'rollup-plugin-peer-deps-external'
+import resolve from '@rollup/plugin-node-resolve'
+// import commonjs from '@rollup/plugin-commonjs' // haven't activated yet. awaiting stable build
 import typescript from '@rollup/plugin-typescript'
 import vue from '@vitejs/plugin-vue'
-// import vueJsx from '@vitejs/plugin-vue-jsx'
+// import vueJsx from '@vitejs/plugin-vue-jsx' // not really needed yet. haven't moved to jsx in vue
+import postcss from 'rollup-plugin-postcss'
 import terser from '@rollup/plugin-terser'
 import pkg from './package.json' assert { type: 'json' } // import asseting required or else Node complains attempting to load upon build // NOTE: if you get an error when using the 'assert' key word, use the 'with' keyword instead
 
@@ -17,7 +19,7 @@ export default [
       format: 'umd'
     },
     plugins: [
-      // resolve(), // so Rollup can find `ms` // JB: optional only needed for demo repo
+      // resolve(), // so Rollup can find `ms` // JB: optional only needed for demo repo // JB: optional only needed for demo repo/ if you have 3rd party dependencies in node_modules
       // commonjs(), // so Rollup can convert `ms` to an ES module // JB: option needed if source is written commonjs
       vue(),
       typescript(), // so Rollup can convert TypeScript to JavaScript
@@ -46,16 +48,21 @@ export default [
         // file: pkg.main,
         format: 'cjs'
       },
-      {
-        name: 'foobar', // As we have an export, we need to provide the name of a global variable that will be created by our bundle so that other code can access our export via this variable.
-        file: 'dist/bundle.min.js',
-        format: 'iife', // As format, we choose iife. This format wraps the code so that it can be consumed via a script tag in the browser while avoiding unwanted interactions with other code.
-        plugins: [terser()]
-      }
+      // {
+      //   name: 'foobar', // As we have an export, we need to provide the name of a global variable that will be created by our bundle so that other code can access our export via this variable.
+      //   file: 'dist/bundle.min.js',
+      //   format: 'iife', // As format, we choose iife. This format wraps the code so that it can be consumed via a script tag in the browser while avoiding unwanted interactions with other code.
+      //   plugins: [terser()]
+      // }
     ],
     plugins: [
+      peerDepsExternal(),
+      resolve(),
+      // commonjs(),
       vue(),
-      typescript(), // so Rollup can convert TypeScript to JavaScript
+      typescript(), // so Rollup can convert TypeScript to JavaScript // typescript({ tsconfig: './tsconfig.json', sourceMap: true, }),
+      postcss(),
+      // terser(),
     ],
   }
 ]
@@ -117,3 +124,21 @@ Babel
 Buble
 - acts as an intepretor for all versions and variations of javascript and bridges cross-compatibility issues such as bad syntax and missing features, by patching the code it parses and outputs
 */
+
+/**
+lib/index.ts → dist/esm/index.js, dist/cjs/index.js, dist/bundle.min.js...
+(!) Error when using sourcemap for reporting an error: Can't resolve original location of error.
+lib/Foobar.vue?vue&type=style&index=0&scoped=5a15da39&lang.css (2:0)
+(!) Unresolved dependencies
+https://rollupjs.org/troubleshooting/#warning-treating-module-as-external-dependency
+@brincat/core (imported by "lib/index.ts")
+vue (imported by "lib/Foobar.vue")
+(!) Plugin typescript: @rollup/plugin-typescript TS2307: Cannot find module './Foobar.vue' or its corresponding type declarations.
+lib/index.ts: (1:34)
+
+1 export {default as default} from './Foobar.vue'
+
+
+[!] RollupError: Expression expected (Note that you need plugins to import files that are not JavaScript)
+lib/Foobar.vue?vue&type=style&index=0&scoped=5a15da39&lang.css (2:0)
+ */
