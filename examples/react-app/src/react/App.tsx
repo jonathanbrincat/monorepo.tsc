@@ -71,9 +71,15 @@ export default function App() {
           </div>
         </section>
 
-        <Foobar className="text-2xl" />
+        <section className="grid grid-cols-4 gap-8">
+          <div className="col-start-2 col-span-3">
+            <Foobar className="text-2xl my-4" />
 
-        <Button type={"secondary"} text={"hello from button"} onClickHandler={() => console.log('boo')} />
+            <p className="my-4">
+              <Button type={"primary"} text={"hello from button"} onClickHandler={() => console.log('boo')} />
+            </p>
+          </div>
+        </section>
 
         <section className="flex justify-center my-16">
           <div className="display bg-slate-900 border-zinc-300 border-8 rounded-xl p-10" style={{ fontSize: '142px' }}>

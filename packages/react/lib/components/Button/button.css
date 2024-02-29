@@ -1,0 +1,33 @@
+.button {
+  background-color: silver;
+  border: 4px solid silver;
+  border-radius: 4px;
+  color: #1cc49d;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  min-height: 1em;
+  padding: 2px 6px;
+  cursor: pointer;
+}
+
+:root .button:hover {
+  border-color: #fff;
+}
+
+.button-primary {
+  background-color: #1b2f31;
+  border-color: #1b2f31;
+}
+
+.button-secondary {
+  background-color: blue;
+  border-color: blue;
+}
+
+.button-error {
+  background-color: red;
+  border-color: red;
+}

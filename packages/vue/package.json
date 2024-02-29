@@ -49,5 +49,8 @@
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
     "typescript": "^5.3.3"
+  },
+  "peerDependencies": {
+    "vue": ">=3.x.x"
   }
 }

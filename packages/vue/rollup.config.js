@@ -9,23 +9,24 @@ import terser from '@rollup/plugin-terser'
 import pkg from './package.json' assert { type: 'json' } // import asseting required or else Node complains attempting to load upon build // NOTE: if you get an error when using the 'assert' key word, use the 'with' keyword instead
 
 export default [
-  /*
   {
     input: 'lib/index.ts',
     output: {
       name: '@brincat/vue',
-      // file: 'umd/index.js',
-      file: pkg.browser,
+      file: 'umd/index.js',
+      // file: pkg.browser,
       format: 'umd'
     },
     plugins: [
-      // resolve(), // so Rollup can find `ms` // JB: optional only needed for demo repo // JB: optional only needed for demo repo/ if you have 3rd party dependencies in node_modules
-      // commonjs(), // so Rollup can convert `ms` to an ES module // JB: option needed if source is written commonjs
+      peerDepsExternal(),
+      resolve(), // so Rollup can find `ms` // JB: optional only needed for demo repo // JB: optional only needed for demo repo/ if you have 3rd party dependencies in node_modules
+      commonjs(), // so Rollup can convert `ms` to an ES module // JB: option needed if source is written commonjs
       vue(),
       typescript(), // so Rollup can convert TypeScript to JavaScript
+      postcss(),
+      terser(),
     ]
   },
-  */
 
   // CommonJS (for Node) and ES module (for bundlers) build.
   // (We could have three entries in the configuration array
@@ -35,25 +36,23 @@ export default [
   // `file` and `format` for each target)
   {
     input: 'lib/index.ts',
-    // external: ['ms'],
     external: ['@brincat/core'], // should list npm dependencies(as oppose to dev dependencies)
     output: [
       {
-        file: 'dist/esm/index.js',
-        // file: pkg.module,
+        file: pkg.module,
         format: 'es'
       },
       {
-        file: 'dist/cjs/index.js',
-        // file: pkg.main,
-        format: 'cjs'
+        file: pkg.main,
+        format: 'cjs',
+        // name: 'vue-lib',
       },
-      // {
-      //   name: 'foobar', // As we have an export, we need to provide the name of a global variable that will be created by our bundle so that other code can access our export via this variable.
-      //   file: 'dist/bundle.min.js',
-      //   format: 'iife', // As format, we choose iife. This format wraps the code so that it can be consumed via a script tag in the browser while avoiding unwanted interactions with other code.
-      //   plugins: [terser()]
-      // }
+      {
+        name: 'foobar', // As we have an export, we need to provide the name of a global variable that will be created by our bundle so that other code can access our export via this variable.
+        file: 'dist/bundle.min.js',
+        format: 'iife', // As format, we choose iife. This format wraps the code so that it can be consumed via a script tag in the browser while avoiding unwanted interactions with other code.
+        plugins: [terser()]
+      }
     ],
     plugins: [
       peerDepsExternal(),
@@ -62,7 +61,7 @@ export default [
       vue(),
       typescript(), // so Rollup can convert TypeScript to JavaScript // typescript({ tsconfig: './tsconfig.json', sourceMap: true, }),
       postcss(),
-      // terser(),
+      terser(),
     ],
   }
 ]
@@ -124,24 +123,6 @@ Babel
 Buble
 - acts as an intepretor for all versions and variations of javascript and bridges cross-compatibility issues such as bad syntax and missing features, by patching the code it parses and outputs
 */
-
-/**
-lib/index.ts → dist/esm/index.js, dist/cjs/index.js, dist/bundle.min.js...
-(!) Error when using sourcemap for reporting an error: Can't resolve original location of error.
-lib/Foobar.vue?vue&type=style&index=0&scoped=5a15da39&lang.css (2:0)
-(!) Unresolved dependencies
-https://rollupjs.org/troubleshooting/#warning-treating-module-as-external-dependency
-@brincat/core (imported by "lib/index.ts")
-vue (imported by "lib/Foobar.vue")
-(!) Plugin typescript: @rollup/plugin-typescript TS2307: Cannot find module './Foobar.vue' or its corresponding type declarations.
-lib/index.ts: (1:34)
-
-1 export {default as default} from './Foobar.vue'
-
-
-[!] RollupError: Expression expected (Note that you need plugins to import files that are not JavaScript)
-lib/Foobar.vue?vue&type=style&index=0&scoped=5a15da39&lang.css (2:0)
- */
 
 /* 
 USEFUL REFERENCE - lol this is stuff I was doing back in 2017!! obviously times have moved on. They're even copying my file structure convention now! Stuff that used to be ignored and taken for granted, that I agonised over to get right, architecture and inclusion of tests specs and story book. parent index.js exports too. It's like someone copied one of my old component libraries! Not that anyone used to listen to me back then. Obviously I was a pioneer lol or maybe I was just onto a good thing because I know my shit.
