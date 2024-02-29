@@ -5,6 +5,7 @@ import typescript from '@rollup/plugin-typescript'
 import postcss from 'rollup-plugin-postcss'
 import terser from '@rollup/plugin-terser'
 // import autoprefixer from 'autoprefixer'
+// import cssOnly from 'rollup-plugin-css-only';
 import pkg from './package.json' assert { type: 'json' } // import asseting required or else Node complains attempting to load upon build // NOTE: if you get an error when using the 'assert' key word, use the 'with' keyword instead
 
 export default [
@@ -37,16 +38,17 @@ export default [
     external: ['@brincat/core'], // should list npm dependencies(as oppose to dev dependencies)
     output: [
       {
-        file: 'dist/esm/index.js',
-        // file: pkg.module,
+        // file: 'dist/esm/index.js',
+        file: pkg.module,
         format: 'es',
         // sourcemap: true,
       },
       {
-        file: 'dist/cjs/index.js',
-        // file: pkg.main,
+        // file: 'dist/cjs/index.js',
+        file: pkg.main,
         format: 'cjs',
         // sourcemap: true,
+        // name: 'react-lib',
       },
       // {
       //   name: 'foobar', // As we have an export, we need to provide the name of a global variable that will be created by our bundle so that other code can access our export via this variable.
@@ -59,11 +61,13 @@ export default [
       peerDepsExternal(),
       nodeResolve(),
       commonjs(),
-      typescript(), // so Rollup can convert TypeScript to JavaScript // typescript({ tsconfig: './tsconfig.json' }),
+      typescript(), // so Rollup can convert TypeScript to JavaScript
+      // typescript({ tsconfig: './tsconfig.json' }),
       postcss(
         { plugins: [] }
         // autoprefixer(),
       ),
+      // cssOnly({ output: 'dist/bundle.css' })
       // terser(),
     ],
   }

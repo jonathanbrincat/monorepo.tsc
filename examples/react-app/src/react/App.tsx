@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import Countdown from './components/Countdown.tsx'
 import CountdownTimer from '@brincat/core'
-import Foobar, { foo } from '@brincat/react'
+import Foobar, { foo, Button } from '@brincat/react'
 import reactLogo from '../svg/logo_react.svg'
 
 // JB: introducing css modules will allow styles to be scoped and introduce parity with Vue.
@@ -16,7 +16,7 @@ export default function App() {
 
   const countdownTimer = new CountdownTimer(36000000, (newTick: number) => setTick(newTick))
 
-  console.log('hello ', foo)
+  console.log('hello ', foo())
 
   useEffect(() => {
     // countdownTimer.start() // JB: countdowndown tick => state. causing constant re-renders. not good. reason why fans go ape shit. // try useMemo or mobx
@@ -71,7 +71,9 @@ export default function App() {
           </div>
         </section>
 
-        {/* <Foobar className="text-2xl" /> */}
+        <Foobar className="text-2xl" />
+
+        <Button type={"secondary"} text={"hello from button"} onClickHandler={() => console.log('boo')} />
 
         <section className="flex justify-center my-16">
           <div className="display bg-slate-900 border-zinc-300 border-8 rounded-xl p-10" style={{ fontSize: '142px' }}>

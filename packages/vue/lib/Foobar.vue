@@ -2,7 +2,8 @@
   <p class="foobar">Hello from Vue package</p>
 </template>
 
-<style scoped>
+<!-- JB: still rollup build issues with scoped styles -->
+<style>
 .foobar {
   background: blue;
   padding: 20px;

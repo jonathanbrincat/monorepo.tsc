@@ -1,5 +1,5 @@
 .button {
-  background-color: aliceblue;
+  background-color: cornflowerblue;
   border-radius: 4px;
   display: flex;
   align-items: center;
@@ -10,11 +10,11 @@
 }
 
 .button-primary {
-  background: purple;
+  background: orange;
 }
 
 .button-secondary {
-  background-color: cyan;
+  background-color: blue;
 }
 
 .button-error {
