@@ -21,7 +21,11 @@ npx lerna run build --scope=@brincat/react
 
 ### Publish
 ```sh
-npm publish
+npm login
+# npm whoami
+
+npm publish --access public
+# Note: you will be prompted to authenticate before being allowed to publish.
 ```
 
 ## Usage

@@ -1,6 +1,6 @@
 {
   "name": "@brincat/utils",
-  "version": "0.0.0",
+  "version": "0.0.0-alpha.0",
   "description": "Utility package",
   "author": "Jonathan Brincat <jb@pix8.co.uk>",
   "homepage": "https://github.com/jonathanbrincat/monorepo.tsc#readme",
