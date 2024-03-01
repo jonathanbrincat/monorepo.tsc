@@ -24,8 +24,15 @@
     "dist"
   ],
   "scripts": {
-    "build": "rm -rf ./dist && tsc",
-    "test": "npx lerna run build --scope=@brincat/utils && jest"
+    "build": "rm -rf ./dist && tsc -b tsconfig.cjs.json tsconfig.esm.json tsconfig.types.json",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "build:types": "tsc -p tsconfig.types.json",
+    "pretest": "npx lerna run build --scope=@brincat/utils",
+    "test": "jest",
+    "prepare": "npx lerna run build --scope=@brincat/utils",
+    "prePublishOnly": "npx lerna run test --scope=@brincat/utils",
+    "publish": ""
   },
   "devDependencies": {
     "jest": "^29.7.0",

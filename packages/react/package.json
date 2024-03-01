@@ -26,12 +26,18 @@
   "scripts": {
     "start": "",
     "dev": "",
-    "build": "rm -rf ./dist && tsc -b tsconfig.cjs.json tsconfig.esm.json tsconfig.types.json",
-    "build:cjs": "tsc -p tsconfig.cjs.json",
-    "build:esm": "tsc -p tsconfig.esm.json",
+    "storybook": "",
+    "build": "rm -rf ./dist && npx rollup -c && tsc -p tsconfig.types.json",
+    "build:bundle": "npx rollup -c",
     "build:types": "tsc -p tsconfig.types.json",
-    "build:rollup": "rm -rf ./dist && npx rollup -c npx lerna run build:types --scope=@brincat/react",
-    "test": "npx lerna run build --scope=@brincat/react && jest"
+    "pretest": "npx lerna run build --scope=@brincat/react",
+    "test": "jest",
+    "prepare": "npx lerna run build --scope=@brincat/react",
+    "prePublishOnly": "npx lerna run test --scope=@brincat/react",
+    "publish": ""
+  },
+  "peerDependencies": {
+    "react": ">=18.x.x"
   },
   "dependencies": {
     "@brincat/core": "*"
@@ -47,8 +53,5 @@
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
     "typescript": "^5.3.3"
-  },
-  "peerDependencies": {
-    "react": ">=18.x.x"
   }
 }

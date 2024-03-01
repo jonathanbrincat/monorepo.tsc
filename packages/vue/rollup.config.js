@@ -13,8 +13,8 @@ export default [
   {
     input: 'lib/index.ts',
     output: {
-      name: '@brincat/vue',
-      file: 'umd/index.js',
+      name: 'catvue',
+      file: 'dist/umd/index.js',
       // file: pkg.browser,
       format: 'umd'
     },
@@ -48,14 +48,14 @@ export default [
         // sourcemap: true,
       },
       {
+        name: 'catvue',
         file: pkg.main,
         format: 'cjs',
         // sourcemap: true,
-        // name: 'vue-lib',
       },
       {
-        name: 'foobar', // As we have an export, we need to provide the name of a global variable that will be created by our bundle so that other code can access our export via this variable.
-        file: 'dist/bundle.min.js',
+        name: 'catvue', // As we have an export, we need to provide the name of a global variable that will be created by our bundle so that other code can access our export via this variable.
+        file: 'dist/index.min.js',
         format: 'iife', // As format, we choose iife. This format wraps the code so that it can be consumed via a script tag in the browser while avoiding unwanted interactions with other code.
         plugins: [terser()]
       }

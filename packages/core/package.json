@@ -24,11 +24,15 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc -b tsconfig.cjs.json tsconfig.esm.json tsconfig.types.json",
+    "build": "rm -rf ./dist && tsc -b tsconfig.cjs.json tsconfig.esm.json tsconfig.types.json",
     "build:cjs": "tsc -p tsconfig.cjs.json",
     "build:esm": "tsc -p tsconfig.esm.json",
     "build:types": "tsc -p tsconfig.types.json",
-    "test": "npx lerna run build --scope=@brincat/core && jest"
+    "pretest": "npx lerna run build --scope=@brincat/core",
+    "test": "jest",
+    "prepare": "npx lerna run build --scope=@brincat/core",
+    "prePublishOnly": "npx lerna run test --scope=@brincat/core",
+    "publish": ""
   },
   "dependencies": {
     "@brincat/utils": "*"
